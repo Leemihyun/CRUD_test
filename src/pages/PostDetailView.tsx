@@ -24,6 +24,7 @@ const PostDetailView = () => {
                     {data.title}
                 </div>
             )}
+            <button onClick={()=>navigate(`/update/${id}`)}>Update</button>
             <button onClick={handleDelete}>Delete</button>
         </div>
     );
