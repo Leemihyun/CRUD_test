@@ -1,9 +1,20 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import usePostDetail from "../hooks/usePostDetail.ts";
+import usePostDelete from "../hooks/usePostDelete.ts";
 
 const PostDetailView = () => {
+    const navigate = useNavigate()
     const { id} = useParams<{id: string}>()
     const {isLoading, isSuccess, data, error} = usePostDetail(id);
+    const { mutateAsync} = usePostDelete()
+
+    const handleDelete = async () => {
+        // 삭제 api
+        await mutateAsync(id);
+        // 화면이동
+        navigate('/')
+    }
+
     return (
         <div>
             {isLoading && <h1>Loading...</h1>}
@@ -13,6 +24,7 @@ const PostDetailView = () => {
                     {data.title}
                 </div>
             )}
+            <button onClick={handleDelete}>Delete</button>
         </div>
     );
 };
