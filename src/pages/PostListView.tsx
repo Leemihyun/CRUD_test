@@ -5,6 +5,7 @@ const PostListView = () => {
     const navigate = useNavigate()
     const {isLoading, isSuccess, data, error} = usePostList()
     return (
+        <>
         <div>
             {isLoading && <h1>Loading...</h1>}
             {error && <h1>{error.message}</h1>}
@@ -15,6 +16,10 @@ const PostListView = () => {
                </div>
             ))}
         </div>
+        <div>
+            <button onClick={()=> navigate('/new')}>New Post</button>
+        </div>
+        </>
     );
 };
 
