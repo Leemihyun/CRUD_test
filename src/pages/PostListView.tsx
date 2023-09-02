@@ -1,6 +1,8 @@
 import usePostList from "../hooks/usePostList.ts";
+import {useNavigate} from "react-router-dom";
 
 const PostListView = () => {
+    const navigate = useNavigate()
     const {isLoading, isSuccess, data, error} = usePostList()
     return (
         <div>
@@ -9,6 +11,7 @@ const PostListView = () => {
             {isSuccess && data?.map((item, index) => (
                <div key={index}>
                    <h1>{item.title}</h1>
+                   <button onClick={()=> navigate(`/${item.id}`)}>View Detail</button>
                </div>
             ))}
         </div>
