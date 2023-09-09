@@ -5,12 +5,12 @@ import usePostDelete from "../hooks/usePostDelete.ts";
 const PostDetailView = () => {
     const navigate = useNavigate()
     const { id} = useParams<{id: string}>()
-    const {isLoading, isSuccess, data, error} = usePostDetail(id);
+    const {isLoading, isSuccess, data, error} = usePostDetail(id!);
     const { mutateAsync} = usePostDelete()
 
     const handleDelete = async () => {
         // 삭제 api
-        await mutateAsync(id);
+        await mutateAsync(id!);
         // 화면이동
         navigate('/')
     }

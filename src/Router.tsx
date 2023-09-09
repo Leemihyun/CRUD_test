@@ -3,6 +3,8 @@ import PostListView from "./pages/PostListView.tsx";
 import PostDetailView from "./pages/PostDetailView.tsx";
 import PostCreateView from "./pages/PostCreateView.tsx";
 import PostUpdateView from "./pages/PostUpdateView.tsx";
+import SignUpView from "./pages/SignUpView.tsx";
+import LoginView from "./pages/LoginView.tsx";
 
 const Router = () =>{
     return(
@@ -12,6 +14,8 @@ const Router = () =>{
                 <Route path={'/:id'} element={<PostDetailView />} />
                 <Route path={'/new'} element={<PostCreateView />} />
                 <Route path={'/update/:id'} element={<PostUpdateView />} />
+                <Route path={'/signup'} element={<SignUpView />} />
+                <Route path={'/login'} element={<LoginView />} />
             </Routes>
         </BrowserRouter>
     )

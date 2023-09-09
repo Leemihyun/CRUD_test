@@ -1,5 +1,8 @@
 import usePostCreate from "../hooks/usePostCreate.ts";
 import {useNavigate} from "react-router-dom";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import PostForm , {PostFormValues} from "../components/PostForm.tsx";
 import { useForm } from "react-hook-form";
 import {Post} from "../types/Post.ts";
@@ -8,6 +11,7 @@ import {Post} from "../types/Post.ts";
 const PostCreateView = () => {
     const navigate = useNavigate()
     const { isLoading, mutateAsync} = usePostCreate()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const {
         register,
@@ -20,14 +24,15 @@ const PostCreateView = () => {
     } = useForm<PostFormValues>()
 
     const onSubmit = async (values: PostFormValues) => {
-        const newPost  = {
-            title: values.title,
-            content: values.content,
-            category: values.category,
-            image: values.image,
-        }
-        console.log('newPost ? ', newPost)
-        await mutateAsync(newPost as Post);
+        // console.log('create > async > values? ', values)
+        // const newPost  = {
+        //     title: values.title,
+        //     content: values.content,
+        //     category: values.category,
+        //     image: values.image,
+        // }
+        // console.log('newPost ? ', newPost)
+        await mutateAsync(values as Post);
         navigate('/', {replace: true})
 
     }
