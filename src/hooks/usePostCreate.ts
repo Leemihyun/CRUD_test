@@ -3,7 +3,14 @@ import {Post} from "../types/Post.ts";
 import axios from "axios";
 
 const createPost = async ( userInput: Post)=> {
-    const {data} =  await  axios.post('http://localhost:8000/api/post', userInput)
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }
+
+    const {data} =  await  axios.post('http://localhost:8000/api/post', userInput, config)
     return data.data
 }
 
