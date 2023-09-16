@@ -21,6 +21,8 @@ const PostDetailView = () => {
             {isLoading && <h1>Loading...</h1>}
             {error && <h1>{error.message}</h1>}
             {isSuccess && data && (
+                <>
+                <Button onClick={()=> navigate(-1)}>Go Back</Button>
                 <Stack direction={'column'}>
                     <Stack direction={'row'} padding={10} >
                         <Box
@@ -49,8 +51,8 @@ const PostDetailView = () => {
                          <Button onClick={handleDelete}>Delete</Button>
                     </Stack>
                 </Stack>
+                </>
             )}
-
         </div>
     );
 };

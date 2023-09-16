@@ -16,9 +16,9 @@ const userPostUpdate = () => {
             // axios
             // .patch(`http://localhost:8000/api/post/${post.id}`, post)
             // .then((res: AxiosResponse) => res.data.data),
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries(({
-                queryKey: ['posts']
+                queryKey: ['post', data.id]
             }))
         }
     })

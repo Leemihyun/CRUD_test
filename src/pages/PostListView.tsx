@@ -21,8 +21,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {DataGrid, GridColDef, GridValueGetterParams} from "@mui/x-data-grid";
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Button} from "@mui/material";
+import AppBar from "../components/AppBar.tsx";
 
 const PostListView = () => {
     const navigate = useNavigate()
@@ -71,56 +72,57 @@ const PostListView = () => {
             {error && <h1>{error.message}</h1>}
             {isSuccess &&
                 <>
-                    <DataGrid
-                    rows={data}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { page: 0, pageSize: 20 },
-                        },
-                    }}
-                    pageSizeOptions={[5, 20]}
-                    checkboxSelection
-                    style={{ color: 'white'}}
-                    columnHeaderHeight={90}
-                    density={'compact'}
-                    onCellClick={(params,details)=>{
-                        setItem({...params});
-                        console.log('getItem? ' , getItem)
-                        console.log('params? ' ,params)
-                        console.log('details? ', details)
-                    }}
-                    />
-                    <Button onClick={()=> navigate(`/${getItem?.id}`)}>View Detail</Button>
-                    <Button onClick={()=> navigate('/new')}>New Post</Button>
+                    {/*<DataGrid*/}
+                    {/*rows={data}*/}
+                    {/*columns={columns}*/}
+                    {/*initialState={{*/}
+                    {/*    pagination: {*/}
+                    {/*        paginationModel: { page: 0, pageSize: 20 },*/}
+                    {/*    },*/}
+                    {/*}}*/}
+                    {/*pageSizeOptions={[5, 20]}*/}
+                    {/*checkboxSelection*/}
+                    {/*style={{ color: 'white'}}*/}
+                    {/*columnHeaderHeight={90}*/}
+                    {/*density={'compact'}*/}
+                    {/*onCellClick={(params,details)=>{*/}
+                    {/*    setItem({...params});*/}
+                    {/*    console.log('getItem? ' , getItem)*/}
+                    {/*    console.log('params? ' ,params)*/}
+                    {/*    console.log('details? ', details)*/}
+                    {/*}}*/}
+                    {/*/>*/}
+                    {/*<Button onClick={()=> navigate(`/${getItem?.id}`)}>View Detail</Button>*/}
+                    {/*<Button onClick={()=> navigate('/new')}>New Post</Button>*/}
 
-                    {/*<TableContainer component={Paper}>*/}
-                    {/*    <Table sx={{ minWidth: 700, maxWidth: 1400, margin: '0 auto', width: '90%' }} aria-label="customized table">*/}
-                    {/*        <TableHead>*/}
-                    {/*            <TableRow>*/}
-                    {/*                <StyledTableCell>title</StyledTableCell>*/}
-                    {/*                <StyledTableCell>category</StyledTableCell>*/}
-                    {/*                <StyledTableCell>content</StyledTableCell>*/}
-                    {/*                <StyledTableCell>image</StyledTableCell>*/}
-                    {/*            </TableRow>*/}
-                    {/*        </TableHead>*/}
-                    {/*        <TableBody>*/}
-                    {/*            {data.map((row) => (*/}
-                    {/*                <StyledTableRow key={row.id}>*/}
-                    {/*                    <StyledTableCell component="th" scope="row">*/}
-                    {/*                        {row.title}*/}
-                    {/*                    </StyledTableCell>*/}
-                    {/*                    <StyledTableCell>{row.category}</StyledTableCell>*/}
-                    {/*                    <StyledTableCell>{row.content}</StyledTableCell>*/}
-                    {/*                    <StyledTableCell>*/}
-                    {/*                        /!*{row.image}*!/*/}
-                    {/*                        <img src={row.image} style={{ width: '100px', height: 'auto'}}/>*/}
-                    {/*                    </StyledTableCell>*/}
-                    {/*                </StyledTableRow>*/}
-                    {/*            ))}*/}
-                    {/*        </TableBody>*/}
-                    {/*    </Table>*/}
-                    {/*</TableContainer>*/}
+                    <TableContainer component={Paper}>
+                        <Button onClick={()=> navigate('/new')}>New Post</Button>
+                        <Table sx={{ minWidth: 700, maxWidth: 1400, margin: '0 auto', width: '90%' }} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>title</StyledTableCell>
+                                    <StyledTableCell>category</StyledTableCell>
+                                    <StyledTableCell>content</StyledTableCell>
+                                    <StyledTableCell>image</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data.map((row) => (
+                                    <StyledTableRow onClick={()=> navigate(`/${row.id}`)} key={row.id}>
+                                        <StyledTableCell component="th" scope="row">
+                                            {row.title}
+                                        </StyledTableCell>
+                                        <StyledTableCell>{row.category}</StyledTableCell>
+                                        <StyledTableCell>{row.content}</StyledTableCell>
+                                        <StyledTableCell>
+                                            {/*{row.image}*/}
+                                            <img src={row.image} style={{ width: '100px', height: 'auto'}}/>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
                 </>
             }
