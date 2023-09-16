@@ -4,34 +4,29 @@ import {Post} from "../types/Post.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import usePostDetail from "../hooks/usePostDetail.ts";
 import userPostUpdate from "../hooks/userPostUpdate.ts";
-import React from "react";
+import {StyledForm} from "./form.styles.ts";
+import {Box, Button, TextField, Typography} from "@mui/material";
+
+type FormValues = {
+    id: string;
+    title: string;
+    content: string;
+    category: string;
+    image: string;
+}
 
 const PostUpdateView = () => {
     const navigate = useNavigate()
-
     const { id} = useParams<{id: string}>()
-
-    const {isLoading, isSuccess, data, error} = usePostDetail(id!);
-
-    const {mutateAsync} = userPostUpdate()
-
-    // const initalValues: PostFormValues | undefined = React.useMemo(() => {
-    //     if (data){
-    //         return {
-    //             title: data.title,
-    //             content: data.content,
-    //             category: data.category,
-    //             image: data.image,
-    //             }
-    //     } else {
-    //         return undefined;
-    //     }
-    // }, [data])
-
     const {
         register,
-        handleSubmit
-    } = useForm<PostFormValues>()
+        handleSubmit,
+        formState: {errors}
+    } = useForm<FormValues>()
+
+    const {isLoading, data, error} = usePostDetail(id!);
+
+    const {mutateAsync} = userPostUpdate()
 
     const onSubmit = async (values: PostFormValues) => {
         const updatePost: Post = {
@@ -48,38 +43,69 @@ const PostUpdateView = () => {
     }
 
     return (
-        <div>
-            {isLoading && <h1>loading...</h1>}
-            {/*{isError && <h1>{isError.message}</h1>}*/}
-            <h1>Post Create</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    type={'text'}
-                    placeholder={'title'}
-                    defaultValue={data.title}
-                    {...register('title', {required: true})}
-                />
-                <input
-                    type={'text'}
-                    placeholder={'content'}
-                    defaultValue={data.content}
-                    {...register('content', {required: true})}
-                />
-                <input
-                    type={'text'}
-                    placeholder={'category'}
-                    defaultValue={data.category}
-                    {...register('category', {required: true})}
-                />
-                <input
-                    type={'text'}
-                    placeholder={'image'}
-                    defaultValue={data.image}
-                    {...register('image', {required: true})}
-                />
-                <input type={'submit'}/>
-            </form>
-        </div>
+        <>
+        <Box
+            height="100vh"
+            width="100%"
+            sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}
+        >
+            <StyledForm>
+                <Typography className={'heading'}>Post Update</Typography>
+                {isLoading && <Typography>loading...</Typography>}
+                {error && <Typography>{error}</Typography>}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Box className={'form-container'}>
+                        <TextField
+                            type={'text'}
+                            className={'input-field'}
+                            label={'title'}
+                            {...register('title', {
+                                required: true,
+                            })}
+                            defaultValue={data.title}
+                        />
+                        {errors.title && <p className={'error-msg'}>{errors.title.message}</p>}
+
+                        <TextField
+                            type={'text'}
+                            className={'input-field'}
+                            label={'content'}
+                            {...register('content')}
+                            defaultValue={data.content}
+                        />
+                        {errors.content && <p className={'error-msg'}>{errors.content.message}</p>}
+
+                        <TextField
+                            type={'text'}
+                            className={'input-field'}
+                            label={'category'}
+                            {...register('category')}
+                            defaultValue={data.category}
+                        />
+                        {errors.category && <p className={'error-msg'}>{errors.category.message}</p>}
+
+                        <TextField
+                            type={'text'}
+                            className={'input-field'}
+                            label={'image'}
+                            {...register('image', {
+                                // minLength: {
+                                //     value: 8,
+                                //     message: 'Username should be at least 8 character',
+                                // }
+                            })}
+                            defaultValue={data.image}
+                        />
+                        {errors.image && <p className={'error-msg'}>{errors.image.message}</p>}
+
+
+                        <Button type={'submit'} className={'submit'} variant={'contained'} size={'large'}>Update</Button>
+                    </Box>
+
+                </form>
+            </StyledForm>
+        </Box>
+        </>
     );
 };
 
